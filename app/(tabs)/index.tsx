@@ -1,6 +1,9 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import colors from "../../constants/colors";
 
+// for database
+
+
 export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>

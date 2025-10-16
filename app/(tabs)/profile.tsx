@@ -1,11 +1,13 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import colors from "../../constants/colors";
 
+// for database
+
 export default function ProfileScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>👤 Profile</Text>
+        <Text style={styles.headerText}> Profile</Text>
       </View>
 
       <View style={styles.content}>
