@@ -45,6 +45,9 @@ export default function ProfileScreen({profile, onLogout}: ProfileScreenProps) {
       <TouchableOpacity style={styles.logOutButton} onPress={onLogout}>
         <Text style={styles.logOutText}>Log Out</Text>
       </TouchableOpacity>
+      <TouchableOpacity style={styles.deleteButton} onPress={() => console.log('Delete Account pressed')}>
+        <Text style={styles.logOutText}>Delete Account</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 }
@@ -121,21 +124,30 @@ const styles = StyleSheet.create({
     zIndex: 99,
   },
   logOutButton: {
-    width: 300,
+    width:'80%',
+    padding:16,
+    borderRadius:12,
+    marginTop:12,
     backgroundColor: colors.green,
-    borderRadius: 15,
-    padding: 24,
   },
   logOutText: {
     fontSize: 24,
     textAlign: 'center',
     color: '#fff',
   },
+  deleteButton: {
+    width:'80%',
+    padding:16,
+    borderRadius:12,
+    marginTop:12,
+    backgroundColor: '#F87171',
+  },
   cardButton: {
-    width: 300,
+    width:'80%',
+    padding:16,
+    borderRadius:12,
+    marginTop:12,
     backgroundColor: '#efefef',
-    borderRadius: 15,
-    padding: 24,
   },
   cardText: {
     fontSize: 24,
