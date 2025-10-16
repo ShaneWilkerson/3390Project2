@@ -1,0 +1,103 @@
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+export default function Profile() {
+  return (
+    <ScrollView 
+      style={styles.scroll} 
+      contentContainerStyle={styles.container}
+    >
+      <Text style={styles.title}>Profile</Text>
+      <View style={styles.halfBackground}></View>
+      <View style={styles.profileShadow}>
+        <Image
+        source={{ uri: 'https://i.pravatar.cc/150?img=14' }}
+        style={styles.profileImage}
+      />
+      </View>
+
+      <View style={styles.card}>
+        <Text style={styles.cardText}>John Doe</Text>
+      </View>
+      <View style={styles.card}>
+        <Text style={styles.cardText}>johndoe@aol.com</Text>
+      </View>
+      <View style={styles.card}>
+        <Text style={styles.cardText}>Joined October 14, 2025</Text>
+      </View>
+      <View style={styles.card}>
+        <Text style={styles.cardText}>Gym Reviews: 0</Text>
+        <Text style={styles.cardText}>Mates: 0</Text>
+      </View>
+      <TouchableOpacity style={styles.cardButton} onPress={() => console.log('Change Username pressed')}>
+        <Text style={styles.cardText}>Change Username</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.cardButton} onPress={() => console.log('Change Password pressed')}>
+        <Text style={styles.cardText}>Change Password</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.logOutButton} onPress={() => console.log('Log Out pressed')}>
+        <Text style={styles.logOutText}>Log Out</Text>
+      </TouchableOpacity>
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  scroll: {
+    backgroundColor: '#fff',
+  },
+  halfBackground: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 180,
+    backgroundColor: '#007AFF',
+  },
+  container: {
+    alignItems: 'center',
+    paddingTop: 32,
+    paddingBottom: 32,
+    gap: 16,
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 32,
+    marginBottom: 16,
+    zIndex: 1,
+    color: '#fff',
+  },
+  profileShadow: {
+    height: 120,
+    width: 120,
+    borderRadius: 60,
+    elevation: 5,
+  },
+  profileImage: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    marginBottom: 24,
+    zIndex: 99,
+  },
+  logOutButton: {
+    width: 300,
+    backgroundColor: '#007AFF',
+    borderRadius: 15,
+    padding: 24,
+  },
+  logOutText: {
+    fontSize: 24,
+    textAlign: 'center',
+    color: '#fff',
+  },
+  cardButton: {
+    width: 300,
+    backgroundColor: '#efefef',
+    borderRadius: 15,
+    padding: 24,
+  },
+  cardText: {
+    fontSize: 24,
+    textAlign: 'center',
+  },
+});
