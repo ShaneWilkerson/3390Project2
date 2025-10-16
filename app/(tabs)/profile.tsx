@@ -17,16 +17,16 @@ export default function ProfileScreen() {
       />
       </View>
 
-      <View style={styles.card}>
+      <View>
         <Text style={styles.cardText}>John Doe</Text>
       </View>
-      <View style={styles.card}>
+      <View>
         <Text style={styles.cardText}>johndoe@aol.com</Text>
       </View>
-      <View style={styles.card}>
+      <View>
         <Text style={styles.cardText}>Joined October 14, 2025</Text>
       </View>
-      <View style={styles.card}>
+      <View>
         <Text style={styles.cardText}>Gym Reviews: 0</Text>
         <Text style={styles.cardText}>Mates: 0</Text>
       </View>
