@@ -1,13 +1,19 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
+import React, { useState } from 'react';
+import colors from "../../constants/colors";
 
 export default function TabLayout() {
+
+  const [loggedInProfile, setLoggedInProfile] = useState<any>(null);
+
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: "#5B8150",
+        tabBarActiveTintColor: colors.green,
         tabBarInactiveTintColor: "gray",
+        tabBarStyle: {backgroundColor: '#efefef', borderTopWidth: 0},
       }}
     >
       <Tabs.Screen
@@ -40,4 +46,3 @@ export default function TabLayout() {
     </Tabs>
   );
 }
-

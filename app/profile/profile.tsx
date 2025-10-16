@@ -1,8 +1,16 @@
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import colors from "../../constants/colors";
 
 // for database
+type ProfileScreenProps = {
+  profile: { username: string };
+  onLogout: () => void;
+};
 
-export default function ProfileScreen() {
+export default function ProfileScreen({profile, onLogout}: ProfileScreenProps) {
+
+  const username = profile?.username || "Unknown User";
+
   return (
     <ScrollView 
       style={styles.scroll} 
@@ -18,17 +26,13 @@ export default function ProfileScreen() {
       </View>
 
       <View>
-        <Text style={styles.cardText}>John Doe</Text>
-      </View>
-      <View>
-        <Text style={styles.cardText}>johndoe@aol.com</Text>
+        <Text style={styles.cardText}>{username}</Text>
       </View>
       <View>
         <Text style={styles.cardText}>Joined October 14, 2025</Text>
       </View>
       <View>
         <Text style={styles.cardText}>Gym Reviews: 0</Text>
-        <Text style={styles.cardText}>Mates: 0</Text>
       </View>
       <TouchableOpacity style={styles.cardButton} onPress={() => console.log('Change Username pressed')}>
         <Text style={styles.cardText}>Change Username</Text>
@@ -36,7 +40,7 @@ export default function ProfileScreen() {
       <TouchableOpacity style={styles.cardButton} onPress={() => console.log('Change Password pressed')}>
         <Text style={styles.cardText}>Change Password</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.logOutButton} onPress={() => console.log('Log Out pressed')}>
+      <TouchableOpacity style={styles.logOutButton} onPress={onLogout}>
         <Text style={styles.logOutText}>Log Out</Text>
       </TouchableOpacity>
     </ScrollView>
@@ -86,7 +90,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 180,
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.green,
   },
   container: {
     alignItems: 'center',
@@ -116,7 +120,7 @@ const styles = StyleSheet.create({
   },
   logOutButton: {
     width: 300,
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.green,
     borderRadius: 15,
     padding: 24,
   },
