@@ -1,3 +1,4 @@
+// Login screen
 import React, { useState } from 'react';
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import colors from "../../constants/colors";

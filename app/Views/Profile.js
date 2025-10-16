@@ -1,3 +1,4 @@
+// Not being used currently
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function Profile() {

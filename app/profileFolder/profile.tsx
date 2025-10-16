@@ -1,3 +1,4 @@
+// Profile screen
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import colors from "../../constants/colors";
 
@@ -33,6 +34,7 @@ export default function ProfileScreen({profile, onLogout}: ProfileScreenProps) {
       </View>
       <View>
         <Text style={styles.cardText}>Gym Reviews: 0</Text>
+        <Text style={styles.subtitle}>You haven’t left any reviews yet.</Text>
       </View>
       <TouchableOpacity style={styles.cardButton} onPress={() => console.log('Change Username pressed')}>
         <Text style={styles.cardText}>Change Username</Text>
@@ -138,5 +140,9 @@ const styles = StyleSheet.create({
   cardText: {
     fontSize: 24,
     textAlign: 'center',
+  },
+  subtitle: {
+    fontSize: 16,
+    color: "#555",
   },
 });
