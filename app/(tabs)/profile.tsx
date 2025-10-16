@@ -1,16 +1,16 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import colors from "../../constants/colors";
 
-export default function HomeScreen() {
+export default function ProfileScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>🏋️‍♀️ Swolemates</Text>
+        <Text style={styles.headerText}>👤 Profile</Text>
       </View>
 
       <View style={styles.content}>
-        <Text style={styles.title}>Welcome to Home</Text>
-        <Text style={styles.subtitle}>Search and review gyms near you.</Text>
+        <Text style={styles.title}>User Settings</Text>
+        <Text style={styles.subtitle}>Coming soon…</Text>
       </View>
     </SafeAreaView>
   );
