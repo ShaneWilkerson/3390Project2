@@ -106,3 +106,18 @@ export const createProfile = async (username, password) => {
     return reviews;
   };
   
+  // Delete duplicate gyms keeping only the first (lowest ID) for each name/address pair
+  export const removeDuplicateGyms = async () => {
+  const db = await dbPromise;
+
+  await db.runAsync(`
+    DELETE FROM gyms
+    WHERE id NOT IN (
+      SELECT MIN(id)
+      FROM gyms
+      GROUP BY name, address
+    );
+  `);
+
+  console.log("Duplicate gyms removed");
+};
