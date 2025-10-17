@@ -1,4 +1,4 @@
-// app/context/ProfileContext.tsx
+// This file allows dynamic text for the home and profile views
 import React, { createContext, ReactNode, useState } from "react";
 
 type Profile = { username: string } | null;
