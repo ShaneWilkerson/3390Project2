@@ -30,7 +30,7 @@ export default function TabLayout() {
         options={{
           title: "My Reviews",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="list" color={color} size={size} />
+            <Ionicons name="barbell-outline" color={color} size={size} />
           ),
         }}
       />
