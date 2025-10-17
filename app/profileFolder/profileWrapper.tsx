@@ -1,14 +1,17 @@
 // This code allows the "Profile" tab to switch between the login and profile screens
-import React, { useState } from "react";
+import React from "react";
 import Login from "./login";
 import ProfileScreen from "./profile";
 
-export default function ProfileWrapper() {
-  const [loggedInProfile, setLoggedInProfile] = useState<any>(null);
+import { useContext } from "react";
+import { ProfileContext } from "../context/ProfileContext";
 
-  return loggedInProfile ? (
-    <ProfileScreen profile={loggedInProfile} onLogout={() => setLoggedInProfile(null)} />
+export default function ProfileWrapper() {
+  const { profile, setProfile } = useContext(ProfileContext);
+
+  return profile ? (
+    <ProfileScreen profile={profile} onLogout={() => setProfile(null)} />
   ) : (
-    <Login onLoginSuccess={setLoggedInProfile} />
+    <Login onLoginSuccess={setProfile} />
   );
 }
