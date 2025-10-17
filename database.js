@@ -105,6 +105,12 @@ export const createProfile = async (username, password) => {
     );
     return reviews;
   };
+
+  export const loadReviews = async () => {
+    const db = await dbPromise;
+    const reviews = await db.getAllAsync('SELECT * FROM reviews');
+    return reviews;
+  };
   
   // Delete duplicate gyms keeping only the first (lowest ID) for each name/address pair
   export const removeDuplicateGyms = async () => {
