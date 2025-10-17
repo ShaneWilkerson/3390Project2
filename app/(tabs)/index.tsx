@@ -3,8 +3,8 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-nati
 import colors from "../../constants/colors";
 import { ProfileContext } from "../context/ProfileContext";
 
-// for database
-import { loadGyms } from "../../database";
+// For database
+import { loadGyms, loadReviews } from "../../database";
 type Gym = {
   id: number;
   name: string;
@@ -13,7 +13,17 @@ type Gym = {
 
 export default function HomeScreen() {
 
+  // debugger code for checking if reviews exist in database
+  useEffect(() => {
+  const debug = async () => {
+    const reviews = await loadReviews();
+    console.log("Reviews in database:", reviews);
+  };
+  debug();
+  }, []);
+
   const { profile } = useContext(ProfileContext);
+
   const [gyms, setGyms] = useState<Gym[]>([]);
   const username = profile?.username || "Guest";
   const message = profile? "Search and review gyms near you." : "Please login to post reviews for gyms near you.";
@@ -40,9 +50,9 @@ export default function HomeScreen() {
         {gyms.map((gym) => (
         <TouchableOpacity key={gym.id} onPress={() => console.log(`Pressed ${gym.name}`)}>
         <View key={gym.id} style={styles.gymCard}>
-          <Text style={styles.gymCardText}>{gym.name}</Text>
+          <Text style={styles.gymCardTitle}>{gym.name}</Text>
           <Text style={styles.gymCardText}>{gym.address}</Text>
-          <Text style={styles.gymCardText}>Reviews: 0</Text>
+          <Text style={styles.gymCardReview}>Reviews</Text>
         </View>
         </TouchableOpacity>
         ))}
@@ -65,6 +75,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 22,
     fontWeight: "bold",
+    paddingVertical: 16,
   },
   content: {
     flex: 1,
@@ -84,16 +95,28 @@ const styles = StyleSheet.create({
     marginTop:12,
     backgroundColor: colors.green,
   },
+  gymCardTitle: {
+    fontSize: 20,
+    textAlign: 'center',
+    color: '#fff',
+    fontWeight: 'bold',
+  },
   gymCardText: {
     fontSize: 16,
     textAlign: 'center',
     color: '#fff',
   },
+  gymCardReview: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: '#fff',
+    textDecorationLine: 'underline',
+  },
   title: {
     fontSize: 20,
     fontWeight: "600",
     color: colors.textDark,
-    marginBottom: 8,
+    paddingVertical: 16,
   },
   subtitle: {
     fontSize: 16,
