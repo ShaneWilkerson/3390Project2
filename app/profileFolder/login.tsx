@@ -14,6 +14,7 @@ export default function Login({ onLoginSuccess }: LoginProps) {
 
   const handleLogin = async () => {
     const profile = await profileLogin(username, password);
+    console.log("Logged in profile:", profile);
     if (profile) {
       Alert.alert('Login successful');
       onLoginSuccess(profile);
