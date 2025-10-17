@@ -3,9 +3,10 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect } from 'react';
 import 'react-native-reanimated';
+import { ProfileProvider } from './context/ProfileContext';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { setupDatabase } from '../database';
+import { removeDuplicateGyms, setupDatabase } from '../database';
 
 export const unstable_settings = {
   anchor: '(tabs)',
@@ -17,9 +18,11 @@ export default function RootLayout() {
   // runs when app is opened
   useEffect(() => {
     setupDatabase();
+    removeDuplicateGyms();
   }, []);
 
   return (
+    <ProfileProvider>
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -27,6 +30,7 @@ export default function RootLayout() {
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
+    </ProfileProvider>
   );
 }
 
