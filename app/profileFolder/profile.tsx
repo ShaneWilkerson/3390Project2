@@ -2,7 +2,8 @@
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import colors from "../../constants/colors";
 
-// for database
+// For database
+// Prop needed for displaying dynamic text from database
 type ProfileScreenProps = {
   profile: { username: string };
   onLogout: () => void;
@@ -10,7 +11,7 @@ type ProfileScreenProps = {
 
 export default function ProfileScreen({profile, onLogout}: ProfileScreenProps) {
 
-  const username = profile?.username || "Unknown User";
+  const username = profile?.username || "Unknown User"; // Logged in = username, Logged out = Unknown User
 
   return (
     <ScrollView 
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: 'bold',
-    fontSize: 32,
+    fontSize: 22,
     marginBottom: 16,
     zIndex: 1,
     color: '#fff',
