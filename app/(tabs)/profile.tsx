@@ -1,23 +1,62 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+// Profile screen 
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import colors from "../../constants/colors";
 
-// for database
-
 export default function ProfileScreen() {
+  // Stores username 
+  const [username, setUsername] = useState("");
+
+  // Used to move between pages (to login)
+  const router = useRouter();
+
+  // Runs once when the screen loads
+  useEffect(() => {
+    const loadUser = async () => {
+      // Retrieves stuff from AsyncStorage
+      const stored = await AsyncStorage.getItem("currentUser");
+      if (stored) {
+        // Converts JSON string to object and set username
+        const user = JSON.parse(stored);
+        setUsername(user.username);
+      }
+    };
+    loadUser();
+  }, []);
+
+  // logout button function
+  const handleLogout = async () => {
+    // Remove saved user info
+    await AsyncStorage.removeItem("currentUser");
+    // Send back to login
+    router.replace("/login");
+  };
+
   return (
     <SafeAreaView style={styles.container}>
+      {/* Green header section */}
       <View style={styles.header}>
-        <Text style={styles.headerText}> Profile</Text>
+        <Text style={styles.headerText}>Profile</Text>
       </View>
 
+      {/* Main content section */}
       <View style={styles.content}>
-        <Text style={styles.title}>User Settings</Text>
-        <Text style={styles.subtitle}>Coming soon…</Text>
+        <Text style={styles.title}>Logged in as:</Text>
+        <Text style={styles.username}>{username}</Text>
+
+        {/* Logout button */}
+        <TouchableOpacity style={styles.button} onPress={handleLogout}>
+          <Text style={styles.buttonText}>Logout</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 }
 
+// Page styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -45,8 +84,19 @@ const styles = StyleSheet.create({
     color: colors.textDark,
     marginBottom: 8,
   },
-  subtitle: {
-    fontSize: 16,
-    color: "#555",
+  username: {
+    fontSize: 18,
+    color: "#333",
+    marginBottom: 25,
+  },
+  button: {
+    backgroundColor: colors.green,
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    borderRadius: 8,
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
   },
 });
