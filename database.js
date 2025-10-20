@@ -18,10 +18,11 @@ export const setupDatabase = async () => {
     
     CREATE TABLE IF NOT EXISTS gyms (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT,
+      name TEXT UNIQUE,
       address TEXT,
       rating REAL
     );
+
 
     CREATE TABLE IF NOT EXISTS reviews (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -105,5 +106,29 @@ export const createProfile = async (username, password) => {
     );
     return reviews;
   };
+
+  export const clearGyms = async () => {
+    const db = await dbPromise;
+    await db.execAsync('DELETE FROM gyms;');
+    console.log('All gyms cleared');
+  };
+
+  export const resetGymsTable = async () => {
+    const db = await dbPromise;
   
+    // Delete old gyms table completely
+    await db.execAsync("DROP TABLE IF EXISTS gyms;");
+  
+    // Recreate with UNIQUE constraint
+    await db.execAsync(`
+      CREATE TABLE IF NOT EXISTS gyms (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT UNIQUE,
+        address TEXT,
+        rating REAL
+      );
+    `);
+  
+    console.log("Gyms table reset with UNIQUE constraint");
+  };
   

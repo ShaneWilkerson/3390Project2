@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 import { setupDatabase } from '../database';
 
+
 export const unstable_settings = {
   anchor: '(tabs)',
 };
@@ -19,16 +20,19 @@ export default function RootLayout() {
   useEffect(() => {
     const init = async () => {
       await setupDatabase();
-
+      // await resetGymsTable();
+      
+  
       const user = await AsyncStorage.getItem('currentUser');
-if (user) {
-  setIsLoggedIn(true);
-}
-
+      if (user) {
+        setIsLoggedIn(true);
+      }
+  
       setLoading(false);
     };
     init();
   }, []);
+  
 
   if (loading) return null; // prevent flicker before AsyncStorage loads
 
