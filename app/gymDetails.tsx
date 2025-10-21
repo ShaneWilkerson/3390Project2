@@ -1,6 +1,13 @@
+// imports asyncstorage for info for user 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+// imports router tools so we can grab gym info  from other screens
 import { useLocalSearchParams, useRouter } from "expo-router";
+
+// react and hooks
 import React, { useEffect, useState } from "react";
+
+// basic react native components
 import {
     Alert,
     SafeAreaView,
@@ -11,10 +18,14 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
+
 import colors from "../constants/colors";
+
+// database functions 
 import { addReview, gymReviews } from "../database";
 
-// Type for a review
+
+// sets up review 
 type Review = {
   id: number;
   username: string;
@@ -23,14 +34,26 @@ type Review = {
   date: string;
 };
 
+
+// main screen for gym details
 export default function GymDetails() {
-  const { id, name, address } = useLocalSearchParams(); // gym info from previous screen
-  const router = useRouter(); // used for navigation
-  const [reviews, setReviews] = useState<Review[]>([]); // store reviews
+  // pulls gym id, name, and address from previous screen
+  const { id, name, address } = useLocalSearchParams();
+
+  // allows navigation to go back to home or move between screens
+  const router = useRouter();
+
+  // stores all reviews 
+  const [reviews, setReviews] = useState<Review[]>([]);
+
+  // keeps track of what the user types for their review
   const [comment, setComment] = useState("");
+
+  // keeps track of the rating input
   const [rating, setRating] = useState("");
 
-  // Load all reviews for this gym
+
+  // loads all reviews for this gym when the screen first opens
   useEffect(() => {
     const fetchReviews = async () => {
       if (!id) return;
@@ -40,41 +63,57 @@ export default function GymDetails() {
     fetchReviews();
   }, [id]);
 
-  // Add new review
+
+  // adds a new review to the gym
   const handleAddReview = async () => {
+    // makes sure both rating and comment are filled out
     if (!rating || !comment) {
       Alert.alert("Error", "Please fill out both rating and comment.");
       return;
     }
 
+    // gets current user info from asyncstorage
     const userData = await AsyncStorage.getItem("currentUser");
+
+    // makes sure user is logged in before posting
     if (!userData) {
       Alert.alert("Error", "You must be logged in to leave a review.");
       return;
     }
 
+    // turns the user data back into an object
     const user = JSON.parse(userData);
+
+    // creates a date for review 
     const date = new Date().toLocaleDateString();
 
+    // adds review to the database
     await addReview(user.id, Number(id), Number(rating), comment, date);
-    Alert.alert("Success", "Review added!");
 
-    // refresh review list
+    Alert.alert("Success", "Review added!"); // simple alert 
+
+    // refreshes the reviews so the new one appears right away
     const result = await gymReviews(Number(id));
     setReviews(result);
+
+    // clears the input boxes after posting
     setComment("");
     setRating("");
   };
 
-  // Simple back button
+
+  // goes back to the previous screen (home)
   const handleGoBack = () => {
-    router.back(); // goes to the previous screen (Home)
+    router.back();
   };
 
+
+  // jsx to display
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView style={styles.container}>
-        {/* Header section with back button */}
+
+        {/* top header with back button and gym info */}
         <View style={styles.header}>
           <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
             <Text style={styles.backButtonText}>← Back</Text>
@@ -83,10 +122,11 @@ export default function GymDetails() {
           <Text style={styles.headerSubtitle}>{address}</Text>
         </View>
 
-        {/* Review input area */}
+        {/* section for writing a new review */}
         <View style={styles.reviewSection}>
           <Text style={styles.sectionTitle}>Write a Review</Text>
 
+          {/* rating input */}
           <TextInput
             style={styles.input}
             placeholder="Rating (1-5)"
@@ -95,6 +135,7 @@ export default function GymDetails() {
             keyboardType="numeric"
           />
 
+          {/* comment input */}
           <TextInput
             style={[styles.input, { height: 80 }]}
             placeholder="Write your comment"
@@ -103,17 +144,21 @@ export default function GymDetails() {
             multiline
           />
 
+          {/* post review button */}
           <TouchableOpacity style={styles.button} onPress={handleAddReview}>
             <Text style={styles.buttonText}>Post Review</Text>
           </TouchableOpacity>
         </View>
 
-        {/* Review list area */}
+        {/* section that lists all reviews */}
         <View style={styles.reviewsList}>
           <Text style={styles.sectionTitle}>Reviews</Text>
+
+          {/* if there are no reviews yet */}
           {reviews.length === 0 ? (
             <Text style={styles.noReviews}>No reviews yet.</Text>
           ) : (
+            // shows each review card
             reviews.map((r) => (
               <View key={r.id} style={styles.reviewCard}>
                 <Text style={styles.reviewUser}>{r.username}</Text>
@@ -129,7 +174,8 @@ export default function GymDetails() {
   );
 }
 
-// Styles
+
+// styles 
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
@@ -143,7 +189,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.green,
     paddingVertical: 25,
     alignItems: "center",
-    paddingTop: 50, // extra space for iPhone notch
+    paddingTop: 50,
   },
   backButton: {
     position: "absolute",
@@ -235,3 +281,4 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
+

@@ -1,32 +1,55 @@
+// to move between screens 
 import { useRouter } from "expo-router";
+
+// react and hooks
 import React, { useEffect, useState } from "react";
+
+// basic react native components
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+
 import colors from "../../constants/colors";
+
+// database functions 
 import { inputGyms, loadGyms } from "../../database";
 
-// Define what a gym object looks like
+
+// gym object (typescript)
 type Gym = {
   id: number;
   name: string;
   address: string;
 };
 
+
+// main screen that shows all gyms
 export default function HomeScreen() {
-  const [gyms, setGyms] = useState<Gym[]>([]); // list of gyms
+  // stores all gym data from the database
+  const [gyms, setGyms] = useState<Gym[]>([]);
+
+  // used to navigate 
   const router = useRouter();
 
-  // Load gyms from database when page opens
+
+  // loads gyms
   useEffect(() => {
     const fetchGyms = async () => {
-      await inputGyms(); // make sure default gyms exist
-      const gymsFromDB = await loadGyms(); // get gyms from database
-      setGyms(gymsFromDB); // store them in state
-    };
-    fetchGyms();
-  }, []);
+      // (hardcoded list)
+      await inputGyms();
 
-  // When user taps a gym, go to that gym’s details page
+      // gets gyms
+      const gymsFromDB = await loadGyms();
+
+      // puts gyms into a state 
+      setGyms(gymsFromDB);
+    };
+
+    fetchGyms(); // gets gyms
+  }, []); // only run when screen opens 
+
+
+  // runs when the user taps on a gym
   const handleGymPress = (gym: Gym) => {
+    // takes user to that gym
     router.push({
       pathname: "../gymDetails",
       params: {
@@ -37,17 +60,22 @@ export default function HomeScreen() {
     });
   };
 
+
+  // everything that shows on the screen
   return (
     <ScrollView style={styles.container}>
+      {/* top header with app name */}
       <View style={styles.header}>
         <Text style={styles.headerText}>Swolemates</Text>
       </View>
 
+      {/* small intro message */}
       <View style={styles.content}>
         <Text style={styles.title}>Gyms in Bakersfield</Text>
         <Text style={styles.subtitle}>Tap a gym to view reviews or leave one</Text>
       </View>
 
+      {/* list of all gyms */}
       <View style={styles.gymList}>
         {gyms.map((gym) => (
           <TouchableOpacity key={gym.id} onPress={() => handleGymPress(gym)}>
@@ -62,7 +90,8 @@ export default function HomeScreen() {
   );
 }
 
-// Style settings for this page
+
+// styles 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -118,4 +147,5 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 });
+
 

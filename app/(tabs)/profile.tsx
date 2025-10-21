@@ -1,4 +1,3 @@
-// Profile screen 
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
@@ -6,20 +5,20 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import colors from "../../constants/colors";
 
+// functions for profile 
 export default function ProfileScreen() {
-  // Stores username 
+  // stores username 
   const [username, setUsername] = useState("");
 
-  // Used to move between pages (to login)
   const router = useRouter();
 
-  // Runs once when the screen loads
+  // runs when screen loads 
   useEffect(() => {
     const loadUser = async () => {
-      // Retrieves stuff from AsyncStorage
+      // retrieves stuff from AsyncStorage
       const stored = await AsyncStorage.getItem("currentUser");
       if (stored) {
-        // Converts JSON string to object and set username
+        // converts JSON string to object and set username
         const user = JSON.parse(stored);
         setUsername(user.username);
       }
